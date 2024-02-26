@@ -14,13 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 Auth::routes();
+// Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'IndexController@index')->name('index');
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/index', 'IndexController@index')->name('index');
+Route::get('/masuk', 'MasukController@index')->name('masuk');
+Route::get('/keluar', 'KeluarController@index')->name('keluar');
+
+Route::get('/customer', 'CustomerController@index')->name('customer');
+Route::get('/pesanan', 'PesananController@index')->name('pesanan');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
