@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Stock; 
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -25,12 +26,8 @@ class IndexController extends Controller
     public function index()
     {
         $users = User::count();
+        $stocks = Stock::all();
 
-        $widget = [
-            'users' => $users,
-            //...
-        ];
-
-        return view('index', compact('widget'));
+        return view('index', compact('users', 'stocks'));
     }
 }
