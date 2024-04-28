@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\StockMasuk;
 use Illuminate\Http\Request;
 
 class MasukController extends Controller
@@ -25,12 +26,14 @@ class MasukController extends Controller
     public function index()
     {
         $users = User::count();
+        $stock_masuk = StockMasuk::all(); // Ambil semua data stock masuk dari model
 
         $widget = [
             'users' => $users,
             //...
         ];
 
-        return view('masuk', compact('widget'));
+        // Kirim data stock masuk ke view
+        return view('masuk', compact('widget', 'stock_masuk'));
     }
 }
