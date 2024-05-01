@@ -3,28 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Stock; // Import kelas Stock
+use App\Models\Stock; // Tambahkan baris ini untuk mengimpor kelas Stock
 
-class StockMasuk extends Model
+
+class StockKeluar extends Model
 {
-    protected $table = 'masuk';
+    protected $table = 'keluar'; // Nama tabel di database
 
     protected $fillable = [
         'idbarang',
-        'qty',
-        'total',
-        'image',
         'tanggal',
-        'keterangan',
+        'qty',
+        'petugas',
     ];
 
-    protected $casts = [
-        'tanggal' => 'datetime', // Mengonversi kolom tanggal ke tipe data datetime
+    protected $dates = [
+        'tanggal', // Menyatakan bahwa kolom 'tanggal' adalah tipe data Carbon/DateTime
     ];
 
     // Definisikan relasi dengan model Stock
     public function stock()
     {
         return $this->belongsTo(Stock::class, 'idbarang', 'idbarang');
+
     }
 }

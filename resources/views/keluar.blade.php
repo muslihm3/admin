@@ -55,120 +55,71 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                                <tr>
-                                    <td>tanggal</td>
-                                    <td>namabarang</td>
-                                    <td>jumlah</td>
-                                    <td>petugas</td>
-                                    <td>
-
-                                        <a href="detail.php?id=" class="btn btn-info">View</a>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit">
-                                            Edit
-                                        </button>
-
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapus">
-                                            Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <!-- Edit Modal -->
-                                <div class="modal fade" id="edit">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                            <!-- Modal Header -->
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Edit Barang</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-
-                                            <!-- Modal body -->
-                                            <form method="post">
-                                                <div class="modal-body">
-
-                                                    <input type="number" name="qty" value="" class="form-control" required>
-                                                    <br>
-                                                    <input type="Text" name="petugas" value="" class="form-control" required>
-                                                    <br>
-                                                    <input type="hidden" name="idb" value="">
-                                                    <input type="hidden" name="idk" value="">
-                                                    <button type="submit" class="btn btn-primary" name="editkeluar"> Submit </button>
-                                                </div>
-                                            </form>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Hapus Modal -->
-                                <div class="modal fade" id="hapus">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                            <!-- Modal Header -->
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Hapus Barang</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-
-                                            <!-- Modal body -->
-                                            <form method="post">
-                                                <div class="modal-body">
-                                                    Apakah yakin untuk menghapus  ?
-                                                    <input type="hidden" name="idb" value="">
-                                                    <input type="hidden" name="idk" value="">
-                                                    <input type="hidden" name="kty" value="">
-                                                    <br>
-                                                    <br>
-                                                    <button type="submit" class="btn btn-danger" name="hapuskeluar"> Hapus </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Data for Stock Keluar -->
+                            @foreach($stock_keluar as $keluar)
+                            <tr>
+                                <td>{{ $keluar->tanggal }}</td>
+                                <td>{{ $keluar->stock->namabarang }}</td>
+                                <td>{{ $keluar->qty }}</td>
+                                <td>{{ $keluar->petugas }}</td>
+                                <td>
+                                    <a href="detail.php?id={{ $keluar->id }}" class="btn btn-info">View</a>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit{{ $keluar->id }}">
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapus{{ $keluar->id }}">
+                                        Hapus
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-                
+        <!-- Edit Modal -->
+        <div class="modal fade" id="edit">
+            <!-- Isi modal edit -->
+        </div>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- Hapus Modal -->
+        <div class="modal fade" id="hapus">
+            <!-- Isi modal hapus -->
+        </div>
 
-    <!-- The Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Stock Keluar</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-                <!-- Modal body -->
-                <form method="post">
-                    <div class="modal-body">
-
-                        <select name="barangnya" class="form-control">
-                            
-                        </select>
-                        <br>
-
-                        <input type="number" name="qty" placeholder="Jumlah" class="form-control" required>
-                        <br>
-                        <input type="Text" name="petugas" placeholder="Petugas" class="form-control" required>
-                        <br>
-                        <button type="submit" class="btn btn-primary" name="barangkeluar"> Submit </button>
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Stock Keluar</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                </form>
+
+                    <!-- Modal body -->
+                    <form method="post">
+                        <div class="modal-body">
+                            <select name="barangnya" class="form-control">
+                                <!-- Isi opsi select dengan data barang -->
+                            </select>
+                            <br>
+                            <input type="number" name="qty" placeholder="Jumlah" class="form-control" required>
+                            <br>
+                            <input type="Text" name="petugas" placeholder="Petugas" class="form-control" required>
+                            <br>
+                            <button type="submit" class="btn btn-primary" name="barangkeluar"> Submit </button>
+                        </div>
+                    </form>
+                </div>
             </div>
+        </div>
 @endsection

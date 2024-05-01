@@ -40,10 +40,10 @@
                         @foreach($stock_masuk as $masuk)
                         <tr>
                             <td>{{ $masuk->tanggal }}</td>
-                            <td>{{ $masuk->namabarang }}</td>
-                            <td>{{ $masuk->jumlah }}</td>
-                            <td>{{ $masuk->transaksi }}</td>
-                            <td>{{ $masuk->penerima }}</td>
+                            <td>{{ $masuk->stock->namabarang }}</td>
+                            <td>{{ $masuk->qty }}</td>
+                            <td>{{ $masuk->total }}</td>
+                            <td>{{ $masuk->keterangan }}</td>
                             <td>
                                 <a href="detail.php?id={{ $masuk->id }}" class="btn btn-info">View</a>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit{{ $masuk->id }}">
