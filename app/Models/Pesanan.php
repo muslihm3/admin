@@ -25,7 +25,7 @@ class Pesanan extends Model
     // Contoh relasi dengan model Customer
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id','customer_id');
+        return $this->belongsTo(Customer::class, 'idcustomer','idcustomer');
     }
 
     // Contoh accessor untuk format tanggal transaksi
