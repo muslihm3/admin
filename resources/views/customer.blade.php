@@ -65,148 +65,160 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <!-- Iterate through customers data -->
+                        @foreach($customer as $customer)
                             <tr>
-                                <td>No</td>
-                                <td>Nama</td>
-                                <td><a href="https://wa.me/" target="_blank"></a></td>
-                                <td>total . ' Kali'</td>
-                                <td>total</td>
-                                <td>'Rp. ' .  total</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $customer->namacustomer }}</td>
+                                <td><a href="https://wa.me/{{ $customer->numbercustomer }}" target="_blank">{{ $customer->numbercustomer }}</a></td>
+                                <td>{{ $customer->order }}</td>
+                                <td>{{ $customer->qty }}</td>
+                                <td>{{ $customer->total }}</td>
                                 <td>
-                                    <a href="detailcustomer.php?id=" class="btn btn-info">View</a>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit">
+                                    <a href="detailcustomer.php?id={{ $customer->idcustomer }}" class="btn btn-info">View</a>
+                                    <button type="button" class="btn btn-primary editBtn" data-toggle="modal" data-target="#edit" data-id="{{ $customer->idcustomer }}" data-name="{{ $customer->namacustomer }}" data-number="{{ $customer->numbercustomer }}" data-email="{{ $customer->emailcustomer }}">
                                         Edit
                                     </button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapus">
+                                    <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal" data-target="#hapus" data-id="{{ $customer->idcustomer }}">
                                         Hapus
                                     </button>
                                 </td>
                             </tr>
-
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="edit">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Edit Customer</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-
-                                        <!-- Modal body -->
-                                        <form method="post">
-                                            <div class="modal-body">
-                                                <input type="Text" name="namacustomer" value="" class="form-control" required>
-                                                <br>
-                                                <input type="number" name="numbercustomer" value="" class="form-control">
-                                                <br>
-                                                <input type="Email" name="emailcustomer" value="" class="form-control">
-                                                <br>
-
-                                                <input type="hidden" name="idc" value="">
-                                                <button type="submit" class="btn btn-primary" name="editcustomer"> Submit </button>
-                                            </div>
-                                        </form>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Hapus Modal -->
-                            <div class="modal fade" id="hapus">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Hapus Customer</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-
-                                        <!-- Modal body -->
-                                        <form method="post">
-                                            <div class="modal-body">
-                                                Apakah yakin untuk menghapus  ?
-                                                <input type="hidden" name="idc" value="">
-                                                <br>
-                                                <br>
-
-                                                <button type="submit" class="btn btn-danger" name="hapuscustomer"> Hapus </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                        <?php
-                        
-                        ?>
-
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-<i class="fas fa-angle-up"></i>
-</a>
-
-<!-- The Modal -->
-<div class="modal fade" id="myModal">
-<div class="modal-dialog">
-<div class="modal-content">
-
-<!-- Modal Header -->
-<div class="modal-header">
-    <h4 class="modal-title">Tambah Customer</h4>
-    <button type="button" class="close" data-dismiss="modal">&times;</button>
-</div>
-
-<!-- Modal body -->
-<form method="post">
-    <div class="modal-body">
-        <input type="text" name="namacustomer" placeholder="Nama Customer" class="form-control" required>
-        <br>
-        <input type="number" name="numbercustomer" placeholder="Nomer Customer" class="form-control">
-        <br>
-        <input type="Email" name="emailcustomer" placeholder="Email Customer" class="form-control">
-        <br>
-
-        <button type="submit" class="btn btn-primary" name="addnewCustomer"> Submit </button>
-    </div>
-</form>
-
-
-
-
-</div>
-</div>
-</div>
-
-<!-- Modal Impor Data -->
-<div class="modal fade" id="importModal">
-<div class="modal-dialog">
-<div class="modal-content">
-<!-- Header Modal -->
-<div class="modal-header">
-    <h4 class="modal-title">Import Data</h4>
-    <button type="button" class="close" data-dismiss="modal">&times;</button>
-</div>
-<!-- Isi Modal -->
-<form method="post" enctype="multipart/form-data">
-    <div class="modal-body">
-        <div class="form-group">
-            <input type="file" name="file" id="file" accept=".xls, .xlsx" required>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Customer</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <form method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" name="idc" id="edit_idc">
+                        <div class="form-group">
+                            <label for="namacustomer">Nama Customer:</label>
+                            <input type="text" class="form-control" id="namacustomer" name="namacustomer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="numbercustomer">Nomer Customer:</label>
+                            <input type="text" class="form-control" id="numbercustomer" name="numbercustomer">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailcustomer">Email Customer:</label>
+                            <input type="email" class="form-control" id="emailcustomer" name="emailcustomer">
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="editcustomer">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary" name="importData">Import</button>
     </div>
-</form>
-</div>
+
+    <!-- Hapus Modal -->
+    <div class="modal fade" id="hapus">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Hapus Customer</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <form method="post">
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin ingin menghapus pelanggan ini?</p>
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="idc" id="delete_idc">
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-danger" name="hapuscustomer">Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Customer</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <form method="post">
+                    <div class="modal-body">
+                        <input type="text" name="namacustomer" placeholder="Nama Customer" class="form-control" required>
+                        <br>
+                        <input type="number" name="numbercustomer" placeholder="Nomer Customer" class="form-control">
+                        <br>
+                        <input type="Email" name="emailcustomer" placeholder="Email Customer" class="form-control">
+                        <br>
+                        <button type="submit" class="btn btn-primary" name="addnewCustomer"> Submit </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Impor Data -->
+    <div class="modal fade" id="importModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header Modal -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Import Data</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Isi Modal -->
+                <form method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="file" name="file" id="file" accept=".xls, .xlsx" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="importData">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to set data to edit modal
+        $('.editBtn').click(function() {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var number = $(this).data('number');
+            var email = $(this).data('email');
+            $('#edit_idc').val(id);
+            $('#namacustomer').val(name);
+            $('#numbercustomer').val(number);
+            $('#emailcustomer').val(email);
+        });
+
+        // Function to set data to delete modal
+        $('.deleteBtn').click(function() {
+            var id = $(this).data('id');
+            $('#delete_idc').val(id);
+        });
+    </script>
 @endsection
